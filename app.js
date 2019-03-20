@@ -95,7 +95,7 @@ app.use("/cars", cars);
 app.use("/auth", auth);
 app.use("/users", users);
 
-const port = 4000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
