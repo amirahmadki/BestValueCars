@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+  <meta property="og:url" content="https://safe-dawn-65900.herokuapp.com" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Food Recipes" />
+  <meta property="og:description" content="Food Recipes" />
+  <meta property="og:image" content="https://safe-dawn-65900.herokuapp.com" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="/css/style.css">
+  <title>Best Value Cars</title>
+</head>
+
+<body class="grey lighten-3">
+  {{> _header}}
+  {{!-- {{#if user}}
+  {{> _add-btn}}
+  {{/if}} --}}
+  <main>
+    <div class="container ">
+      {{> _msg}}
+      {{> _errors}}
+      <div class="fb-share-button right" data-href="https://safe-dawn-65900.herokuapp.com/{{car.id}}"
+        data-layout="button_count">
+      </div>
+      {{{body}}}
+    </div>
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- Your share button code -->
+
+  </main>
+  {{> _footer}}
+
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous">
+    </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script src="https://cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
+
+  <script>
+    $(document).ready(() => {
+      $('.button-collapse').sideNav();
+      $('select').material_select();
+    });
+
+    CKEDITOR.replace('body');
+
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var elems = document.querySelectorAll('.carousel');
+      var instances = M.Carousel.init(elems, options);
+    });
+
+    $(document).ready(function () {
+      $('.carousel').carousel();
+      instance.set(3);
+    });
+
+    $('.carousel.carousel-slider').carousel({
+      fullWidth: true,
+      indicators: true
+    });
+
+
+
+    $('.carousel').carousel({
+      padding: 200
+    });
+    autoplay();
+    function autoplay() {
+      $('.carousel').carousel('next');
+      setTimeout(autoplay, 3000);
+    }
+
+  </script>
+</body>
+
+</html>

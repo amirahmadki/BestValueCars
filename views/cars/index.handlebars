@@ -1,0 +1,25 @@
+<br><br>
+<div class="row">
+  {{#each cars}}
+  <div class="col s12 m4">
+    <div class="card small">
+      <div class="card-image">
+        {{#if user}}
+        {{{ editIcon user.id ../user.id id true}}}
+        {{/if}}
+        <img src="{{displayImagePath}}">
+        <span class="card-title">{{title}}</span>
+      </div>
+      <div class="card-content">
+        <p>Mileage : {{current_mileage }}
+          <strong>Price:{{price}}</strong>
+          Drive:{{drivetrain}}
+        </p>
+      </div>
+      <div class="card-action">
+        <a href="/cars/show/{{id}}">Read more info</a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

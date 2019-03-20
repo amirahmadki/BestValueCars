@@ -1,0 +1,118 @@
+<div class="row">
+  <h1 class="center">Car Details</h1>
+  <div class="col s8 offset-s2">
+    <form action="/cars" method="post" enctype="multipart/form-data">
+      <div class="row">
+        <div class="input-field ">
+          <input type="text" name="price" required>
+          <label for="price">Price</label>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="input-field ">
+          <input type="text" name="title" required>
+          <label for="title">Title</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field">
+          <input type="text" name="mileage_city">
+          <label for="mileage_city">Mileage City</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field">
+          <input type="text" name="mileage_hwy">
+          <label for="mileage_hwy">Mileage Hwy</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field">
+          <input type="text" name="style">
+          <label for="style">Style</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field">
+          <input type="text" name="engine">
+          <label for="engine">Engine</label>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+        <div class="input-field ">
+          <input type="text" name="fuel" required>
+          <label for="fuel">Fuel Type</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field ">
+          <input type="text" name="drivetrain" required>
+          <label for="drivetrain">Drive train(Auto/Manual)</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field ">
+          <input type="number" name="current_mileage" required>
+          <label for="current_mileage">Current Mileage</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field ">
+          <input type="text" name="exterior_color" required>
+          <label for="exterior_color">Exterior Color</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field ">
+          <input type="text" name="interior_color" required>
+          <label for="interior_color">Interior Color</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field ">
+          <input type="text" name="interior_fabric" required>
+          <label for="interior_fabric">Interior fabric</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field">
+          <h5>Notes from Seller:</h5>
+          <textarea name="body" required></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>File</span>
+            <input type="file" name="images" multiple>
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="Upload one or more files">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field left align">
+          <input type="submit" value="Save" class="btn">
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+</div>

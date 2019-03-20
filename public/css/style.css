@@ -1,0 +1,45 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.nav-wrapper .fa-bars {
+  font-size: 25px;
+}
+
+footer {
+  margin-top: 20px;
+}
+.logo {
+  width: 130px;
+  margin: auto;
+}
+
+.story-text {
+  height: 120px;
+}
+.dash-status {
+  text-transform: capitalize;
+}
+
+#delete-form {
+  display: inline;
+}
+
+#btn-sign-in,
+#btn-register {
+  display: block;
+  width: 100%;
+}
+
+::-webkit-file-upload-button {
+  background: rgb(0, 255, 170);
+  border-radius: 1em;
+  color: white;
+  padding: 1em;
+}

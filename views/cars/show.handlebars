@@ -1,0 +1,87 @@
+<div class="row">
+  <h1 class="display-5 grey-text text-darken-5">{{car.title}}</h1>
+  <div class="col s12 m8">
+    <p>Posted By: {{car.user.firstName}} {{car.user.lastName}}</p>
+    <div class="carousel carousel-slider center">
+      <div class="carousel-fixed-item center">
+
+      </div>
+      {{#each car.images}}
+      <div class="carousel-item white-text" href="#one!">
+        <h2>{{car.title}} </h2>
+
+        <p class="white-text">{{car.title}}</p>
+        <img src={{imagePath}} alt="">
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="col s12 m4">
+    <table class="striped bordered">
+      <tbody>
+        <thead>
+          <th>Car Details</th>
+        </thead>
+        <tr>
+          <td>Price:</td>
+          <td> ${{car.price}}</td>
+        </tr>
+
+        <tr>
+          <td>Current Mileage:</td>
+          <td> {{car.current_mileage}}</td>
+        </tr>
+
+        <tr>
+          <td>Fuel:</td>
+          <td> {{car.fuel}}</td>
+        </tr>
+
+        <tr>
+          <td>Drive Train(Auto/Manual):</td>
+          <td> {{car.drivetrain}}</td>
+        </tr>
+
+        <tr>
+          <td>Exterior Color:</td>
+          <td> {{car.exterior_color}}</td>
+        </tr>
+
+        <tr>
+          <td>Interior Color:</td>
+          <td> {{car.interior_color}}</td>
+        </tr>
+
+
+
+        <tr>
+          <td>Mileage City:</td>
+          <td> {{car.mileage_city}}</td>
+        </tr>
+        <tr>
+          <td>Mileage Hwy:</td>
+          <td> {{car.mileage_hwy}}</td>
+        </tr>
+
+        <tr>
+          <td>style:</td>
+          <td> {{car.style}}</td>
+        </tr>
+
+        <tr>
+          <td>engine:</td>
+          <td> {{car.engine}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<div class="row">
+  <h1 class="blue-text grey-text text-darken-5">Notes from Seller:</h1>
+  <div class="col s12">
+    {{ stripTags car.body }}
+  </div>
+</div>

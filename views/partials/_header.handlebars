@@ -1,0 +1,38 @@
+<nav class="grey darken-3">
+  <div class="container">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo center">Best Value Cars</a>
+      <a href="#" data-activates="main-menu" class="button-collapse show-on-large"><i class="fa fa-bars"></i></a>
+      <!-- RIGHT NAV -->
+      <ul class="right hide-on-small-only">
+        {{#if user}}
+        <li><a href="/dashboard">Welcome {{user.firstName}}{{user.lastName}}</a></li>
+        <li><a href="/auth/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+        {{else}}
+        {{/if}}
+      </ul>
+      <!-- SIDE MENU -->
+      <ul class="side-nav grey lighten-5" id="main-menu">
+        {{#if user}}
+        <li>
+          <div class="user-view">
+            <div class="background">
+              <img src="{{user.image}}" class="cirlcle responsive-img">
+            </div>
+            <a href="#name"><span>{{user.firstName}} {{user.lastName}}</span></a>
+            <a href="#email"><span>{{user.email}}</span></a>
+          </div>
+        </li>
+        <li><a href="/dashboard"><i class="fa fa-cog"></i> Dashboard</a></li>
+        <li><a href="/cars/add"><i class="fa fa-plus"></i> Add new car</a></li>
+        <li><a href="/cars/my"><i class="fa fa-user"></i> My cars</a></li>
+        <li><a href="/contact"><i class="fas fa-envelope"></i> Contact Us</a></li>
+        <li><a href="/auth/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+        {{else}}
+        <li><a class="btn green darken-1" href="/users/login"><i class="fa fa-user-plus"></i> Sign In</a></li>
+        {{/if}}
+        <li><a href="/cars"><i class="fa fa-car"></i> All cars</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

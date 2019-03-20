@@ -1,0 +1,41 @@
+<div class="row center-align">
+  <h1>Sign In</h1>
+  <div class="col s12 center-align">
+    <div class="row">
+      <img class="logo" src="/images/loginImage.png" alt="">
+    </div>
+    <div class="row">
+      <form action="/users/login" method="POST">
+        <div class="row">
+          <div class="input-field col s6 offset-s3">
+            <input type="email" name="email">
+            <label for="email">Email</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s6 offset-s3">
+            <input type="password" name="password">
+            <label for="password">Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6 offset-s3">
+            <input type="submit" value="Sign in" class="btn" id="btn-sign-in">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s6 offset-s3">
+            <a class="btn grey darken-1" href="/users/register"><i class="fa fa-registered" aria-hidden="true"></i> Sign
+              Up</a>
+            <a class="btn red darken-1" href="/auth/google"><i class="fa fa-google left"></i> Login With Google</a>
+          </div>
+        </div>
+
+
+      </form>
+    </div>
+
+  </div>
+</div>

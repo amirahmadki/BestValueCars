@@ -1,0 +1,36 @@
+<h3>Welcome {{user.firstName}}</h3>
+<h4>Your cars</h4>
+
+{{#if cars }}
+<table class="responsive-table highlight">
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Mileage</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each cars}}
+    <tr>
+      <td width="150px"><img src="{{displayImagePath}}" alt="" width="100px" class="materialboxed"></td>
+      <td><span class="dash-status"><a href="/cars/show/{{id}}">{{title}}</a></span></td>
+      <td>{{price}}</td>
+      <td><span class="dash-status">{{current_mileage}}</span></td>
+      <td>
+        <a href="/cars/edit/{{id}}" class="left-align"><i class="fa fa-pencil"></i></a>
+
+        <form action="/cars/{{id}}?_method=DELETE" id="delete-form" method="post">
+          <input type="hidden" value="DELETE" name="_method">
+          <button type="submit" class="red"><i class="fa fa-remove"></i></button>
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{else}}
+<p>You have not posted any cars yet..</p>
+{{/if}}
