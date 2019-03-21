@@ -18,7 +18,8 @@ router.get("/", (req, res) => {
 
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
   Car.find({ user: req.user.id }).then(cars => {
-    res.render("index/dashboard", { cars: cars });
+    var url = req.protocol + "://" + req.get("host") + req.originalUrl;
+    res.render("index/dashboard", { cars: cars, url: url });
   });
 });
 

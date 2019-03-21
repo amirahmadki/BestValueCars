@@ -129,7 +129,9 @@ router.get("/show/:id", (req, res) => {
   Car.findOne({ _id: req.params.id })
     .populate("user")
     .then(car => {
-      res.render("cars/show", { car: car });
+      var url = req.protocol + "://" + req.get("host") + req.originalUrl;
+      //console.log(url);
+      res.render("cars/show", { car: car, url: url });
     });
 });
 
