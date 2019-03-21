@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row card-panel teal lighten-5">
   <h1 class="display-5 grey-text text-darken-5">{{car.title}}</h1>
   <div class="col s12 m8">
     <p>Posted By: {{car.user.firstName}} {{car.user.lastName}}</p>
@@ -79,9 +79,29 @@
   </div>
 </div>
 
-<div class="row">
-  <h1 class="blue-text grey-text text-darken-5">Notes from Seller:</h1>
-  <div class="col s12">
-    {{ stripTags car.body }}
-  </div>
+<div class="row card-panel teal lighten-5">
+  <h5 class="">Notes from Seller:</h1>
+    <div class="col s12">
+      {{ stripTags car.body }}
+    </div>
 </div>
+
+<h5>Contact Seller By Email</h1>
+  <div class="row card-panel teal lighten-5">
+    <p>{{msg}}</p>
+    <form action="/cars/contact/{{car.id}}" method="post" class="col s12">
+      <div class=" row">
+        <div class="input-field">
+          <input type="text" name="subject" required>
+          <label for="subject">Subject</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field">
+          <h5>Please tell us.</h5>
+          <textarea name="body" required></textarea>
+        </div>
+      </div>
+      <input type="submit" value="Send" class="btn">
+    </form>
+  </div>

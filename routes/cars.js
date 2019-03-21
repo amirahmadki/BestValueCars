@@ -8,6 +8,7 @@ var multer = require("multer");
 //const nodeMailer = require("nodemailer");
 var upload = multer({ dest: "public/photos/upload" });
 const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
+const nodeMailer = require("nodemailer");
 
 var storage = multer.diskStorage({
   destination: "public/photos/upload",
@@ -148,6 +149,35 @@ router.delete("/:id", (req, res) => {
   Car.remove({ _id: req.params.id }).then(() => {
     res.redirect("/dashboard");
   });
+});
+
+router.post("/contact/:id", (req, res) => {
+  Car.findOne({ _id: req.params.id })
+    .populate("user")
+    .then(car => {
+      let transporter = nodeMailer.createTransport({
+        service: "gmail",
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: "mailtobestvaluecars@gmail.com", // generated ethereal user
+          pass: "19Dec1977" // generated ethereal password
+        }
+      });
+
+      let mailOptions = {
+        from: "mailtobestvaluecars@gmail.com", // sender address
+        to: car.user.email, // list of receivers
+        subject: req.body.subject, // Subject line
+        text: req.body.body, // plain text body
+        html: req.body.body // html body
+      };
+
+      // send mail with defined transport object
+      let info = transporter.sendMail(mailOptions);
+      req.flash("success_msg", "Email Sent to the seller successfully");
+      var url = req.protocol + "://" + req.get("host") + req.originalUrl;
+      res.redirect("/cars");
+    });
 });
 
 module.exports = router;
