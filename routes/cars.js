@@ -82,7 +82,7 @@ router.get("/my/", ensureAuthenticated, (req, res) => {
     });
 });
 
-router.put("/:id", upload.array("images", 10), (req, res) => {
+router.put("/:id", upload.array("images", 25), (req, res) => {
   var imagepath = "/photos/upload/";
 
   Car.findOne({ _id: req.params.id })
