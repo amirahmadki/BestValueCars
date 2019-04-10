@@ -1,0 +1,19 @@
+<h1>Contact us</h1>
+<div class="row">
+  <p>{{msg}}</p>
+  <form action="/index/contact" method="post" class="col s12">
+    <div class=" row">
+      <div class="input-field">
+        <input type="text" name="subject" required>
+        <label for="subject">Subject</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field">
+        <h5>Please tell us.</h5>
+        <textarea name="body" required></textarea>
+      </div>
+    </div>
+    <input type="submit" value="Send" class="btn">
+  </form>
+</div>

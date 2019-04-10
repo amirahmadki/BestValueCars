@@ -1,8 +1,18 @@
 <div class="row">
   <h1 class="center">Edit car Details</h1>
   <div class="col s8 offset-s2">
-    <form action="/cars/{{car.id}}?_method=PUT" method="post" enctype="multipart/form-data">
+    <form action="/cars/{{car.id}}?_method=PUT" method="post">
       <input type="hidden" value="PUT" name="_method">
+      <div class="row" id="gamediv1">
+        {{#each car.images}}
+        <div class="col s12 m2">
+          <img src="{{imagePath}}" width="100px">
+          <input type="checkbox" id={{imageName}} name="imagestokeep" checked="checked" value={{imageName}}>
+          <label for={{imageName}}></label>
+        </div>
+        {{/each}}
+      </div>
+
       <div class="row">
         <div class="input-field ">
           <input type="text" name="price" value="{{car.price}}" required>
@@ -77,7 +87,7 @@
 
       <div class="row">
         <div class="input-field ">
-          <input type="text" name="interior_color" value={{car.interior_color}}required>
+          <input type="text" name="interior_color" value="{{car.interior_color}}" required>
           <label for="interior_color">Interior Color</label>
         </div>
       </div>
@@ -99,21 +109,23 @@
         <div class="file-field input-field">
           <div class="btn">
             <span>File</span>
-            <input type="file" name="images" multiple>
+            <input type="file" id="images" name="images" onclick="getSign()" multiple>
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text" placeholder="Upload one or more files">
           </div>
+          <div class="row" id="gamediv">
+            {{!-- <img id="preview" src="/images/default.png" width="100px"> --}}
+          </div>
+
         </div>
       </div>
 
-      <div class="row">
+      <div class=" row">
         <div class="input-field left align">
           <input type="submit" value="Save" class="btn">
         </div>
       </div>
-
-
     </form>
   </div>
 </div>

@@ -77,6 +77,44 @@
     </table>
 
   </div>
+
+</div>
+
+<div class="row card-panel teal lighten-5">
+  {{#if car.allowComments}}
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Comments</span>
+      {{#if user}}
+      <form action="/cars/comment/{{car.id}}" method="post">
+        <div class="input-field">
+          <textarea name="commentBody" class="materialize-textarea"></textarea>
+          <label for="commentBody">Add Comment</label>
+        </div>
+        <input type="submit" value="submit" class="btn">
+      </form>
+      {{else}}
+      <p><a href="/users/login/">Login </a>Please login to leave a comment</p>
+      {{/if}}
+    </div>
+  </div>
+
+
+  {{#each car.comments}}
+  <div class="card">
+    <div class="card-content">
+      <h5>{{commentBody}}</h5>
+      <div class="chip">
+        <img src="{{commentUser.image}}">
+        {{commentUser.firstName}} {{commentUser.lastName}}
+        <a href="/cars/my/{{commentUser.id}}">{{commentUser.firstName}} {{commentUser.lastName}}</a>
+      </div>
+      <small>{{formatDate commentDate 'MMMM Do YYYY'}}</span>
+
+    </div>
+  </div>
+  {{/each}}
+  {{/if}}
 </div>
 
 <div class="row card-panel teal lighten-5">

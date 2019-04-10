@@ -6,12 +6,14 @@ const Car = mongoose.model("cars");
 const User = mongoose.model("users");
 var multer = require("multer");
 //const nodeMailer = require("nodemailer");
-var upload = multer({ dest: "public/photos/upload" });
+var upload = multer({ dest: "public/photos/images" });
 const { ensureAuthenticated, ensureGuest } = require("../helpers/auth");
 const nodeMailer = require("nodemailer");
 
+const S3_BUCKET = process.env.S3_BUCKET || "bestvaluecars";
+
 var storage = multer.diskStorage({
-  destination: "public/photos/upload",
+  destination: "public/photos/images",
   filename: function(req, file, cb) {
     cb(null, file.originalname);
   }
@@ -20,7 +22,6 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.get("/", (req, res) => {
-  //console.log(req.user);
   Car.find()
     .populate("user")
     .then(cars => {
@@ -32,8 +33,16 @@ router.get("/add", ensureAuthenticated, (req, res) => {
   res.render("cars/add");
 });
 
-router.post("/", upload.array("images", 10), (req, res) => {
-  var imagepath = "/photos/upload/";
+router.get("/my/", ensureAuthenticated, (req, res) => {
+  Car.find({ user: req.user.id })
+    .populate("user")
+    .then(cars => {
+      res.render("cars/index", { cars: cars });
+    });
+});
+
+router.post("/", (req, res) => {
+  var imagepath = "/photos/images/";
 
   var newCar = new Car({
     title: req.body.title,
@@ -53,22 +62,41 @@ router.post("/", upload.array("images", 10), (req, res) => {
     displayImagePath: ""
   });
   var i = 0;
-  req.files.forEach(element => {
-    const image = {
-      imagePath: "/photos/upload/" + element.originalname
-    };
+  if (req.body.images.length > 0) {
+    if (Array.isArray(req.body.images)) {
+      req.body.images.forEach(element => {
+        const imageName = {
+          imageName: `${element}`,
+          imagePath: `https://${S3_BUCKET}.s3.amazonaws.com/${element}`
+        };
 
-    if (i == 0) {
-      newCar.displayImagePath = "/photos/upload/" + element.originalname;
-      // nodemon.log(newCar.displayImagePath);
-      i = i + 1;
+        if (i == 0) {
+          newCar.displayImagePath = `https://${S3_BUCKET}.s3.amazonaws.com/${element}`;
+          // nodemon.log(newCar.displayImagePath);
+          i = i + 1;
+        }
+        i++;
+        newCar.images.push(imageName);
+      });
+    } else {
+      const imageName = {
+        imageName: `${req.body.images}`,
+        imagePath: `https://${S3_BUCKET}.s3.amazonaws.com/${req.body.images}`
+      };
+
+      if (i == 0) {
+        newCar.displayImagePath = `https://${S3_BUCKET}.s3.amazonaws.com/${
+          req.body.images
+        }`;
+        // nodemon.log(newCar.displayImagePath);
+        i = i + 1;
+      }
+      i++;
+      newCar.images.push(imageName);
     }
-    i++;
-    newCar.images.push(image);
-  });
+  }
 
   new Car(newCar).save().then(car => {
-    //console.log(newCar);
     req.flash("success_msg", "New Car added Successfully");
     res.redirect(`/cars/show/${car.id}`);
   });
@@ -82,9 +110,7 @@ router.get("/my/", ensureAuthenticated, (req, res) => {
     });
 });
 
-router.put("/:id", upload.array("images", 25), (req, res) => {
-  var imagepath = "/photos/upload/";
-
+router.put("/:id", (req, res) => {
   Car.findOne({ _id: req.params.id })
     .populate("user")
     .then(car => {
@@ -104,22 +130,62 @@ router.put("/:id", upload.array("images", 25), (req, res) => {
       car.displayImagePath = "";
 
       var i = 0;
-      req.files.forEach(element => {
-        const image = {
-          imagePath: "/photos/upload/" + element.originalname
+      numberofImages = car.images.length;
+      car.images.splice(0, numberofImages);
+
+      if (Array.isArray(req.body.imagestokeep)) {
+        req.body.imagestokeep.forEach(element => {
+          const imageName = {
+            imageName: `${element}`,
+            imagePath: `https://${S3_BUCKET}.s3.amazonaws.com/${element}`
+          };
+          car.images.push(imageName);
+        });
+      } else {
+        const imageName = {
+          imageName: req.body.imagestokeep,
+          imagePath: `https://${S3_BUCKET}.s3.amazonaws.com/${
+            req.body.imagestokeep
+          }`
         };
+        car.images.push(imageName);
+      }
 
-        if (i == 0) {
-          car.displayImagePath = "/photos/upload/" + element.originalname;
-          // nodemon.log(newCar.displayImagePath);
-          i = i + 1;
+      if (req.body.images.length > 0) {
+        if (Array.isArray(req.body.images)) {
+          req.body.images.forEach(element => {
+            const imageName = {
+              imageName: `${element}`,
+              imagePath: `https://${S3_BUCKET}.s3.amazonaws.com/${element}`
+            };
+
+            if (i == 0) {
+              car.displayImagePath = `https://${S3_BUCKET}.s3.amazonaws.com/${element}`;
+              // nodemon.log(newCar.displayImagePath);
+              i = i + 1;
+            }
+            i++;
+            car.images.push(imageName);
+          });
+        } else {
+          const imageName = {
+            imageName: req.body.images,
+            imagePath: `https://${S3_BUCKET}.s3.amazonaws.com/${
+              req.body.images
+            }`
+          };
+
+          if (i == 0) {
+            car.displayImagePath = `https://${S3_BUCKET}.s3.amazonaws.com/${
+              req.body.images
+            }`;
+            // nodemon.log(newCar.displayImagePath);
+            i = i + 1;
+          }
+          car.images.push(imageName);
         }
-        i++;
-        car.images.push(image);
-      });
-
+      }
       car.save().then(car => {
-        //console.log(newCar);
         req.flash("success_msg", " Car Information edited Successfully");
         res.redirect(`/cars/show/${car.id}`);
       });
@@ -129,10 +195,11 @@ router.put("/:id", upload.array("images", 25), (req, res) => {
 router.get("/show/:id", (req, res) => {
   Car.findOne({ _id: req.params.id })
     .populate("user")
+    .populate("comments.commentUser")
     .then(car => {
       var url = req.protocol + "://" + req.get("host") + req.originalUrl;
-      //console.log(url);
-      res.render("cars/show", { car: car, url: url });
+      show_fb = true;
+      res.render("cars/show", { car: car, url: url, show_fb: show_fb });
     });
 });
 
@@ -140,7 +207,6 @@ router.get("/edit/:id", ensureAuthenticated, (req, res) => {
   Car.findOne({ _id: req.params.id })
     .populate("user")
     .then(car => {
-      //console.log(car.description);
       res.render("cars/edit", { car: car });
     });
 });
@@ -178,6 +244,19 @@ router.post("/contact/:id", (req, res) => {
       var url = req.protocol + "://" + req.get("host") + req.originalUrl;
       res.redirect("/cars");
     });
+});
+
+router.post("/comment/:id", (req, res) => {
+  Car.findOne({ _id: req.params.id }).then(car => {
+    const newcomment = {
+      commentBody: req.body.commentBody,
+      commentUser: req.user
+    };
+    car.comments.unshift(newcomment);
+    car.save().then(story => {
+      res.redirect(`/cars/show/${car.id}`);
+    });
+  });
 });
 
 module.exports = router;

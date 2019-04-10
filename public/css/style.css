@@ -36,10 +36,3 @@ footer {
   display: block;
   width: 100%;
 }
-
-::-webkit-file-upload-button {
-  background: rgb(0, 255, 170);
-  border-radius: 1em;
-  color: white;
-  padding: 1em;
-}

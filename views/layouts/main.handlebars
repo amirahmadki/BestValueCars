@@ -29,8 +29,7 @@
     <div class="container ">
       {{> _msg}}
       {{> _errors}}
-      <div class="fb-share-button right" data-href={{url}} data-layout="button_count">
-      </div>
+      {{> _fbshare}}
       {{{body}}}
     </div>
     <div id="fb-root"></div>
@@ -96,6 +95,8 @@
     })
 
   </script>
+
+  <script type="text/javascript" src="/scripts/uploadscripts.js"></script>
 </body>
 
 </html>

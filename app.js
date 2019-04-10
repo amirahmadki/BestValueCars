@@ -11,6 +11,7 @@ const flash = require("connect-flash");
 //const confirm = require("confirm-dailog");
 //const moment = require("moment");
 //const nodeMailer = require("nodemailer");
+const aws = require("aws-sdk");
 
 const app = express();
 const keys = require("./config/keys");
@@ -19,6 +20,8 @@ require("./models/Car");
 require("./models/User");
 require("./config/passport")(passport);
 require("./config/passportlocal")(passport);
+
+const S3_BUCKET = process.env.S3_BUCKET || "bestvaluecars";
 
 //load routes
 const index = require("./routes/index");
@@ -94,6 +97,56 @@ app.use("/", index);
 app.use("/cars", cars);
 app.use("/auth", auth);
 app.use("/users", users);
+
+app.post("/s3-delete", (req, res) => {
+  console.log("App js s3 delete call");
+  const s3 = new aws.S3();
+  const fileName = req.query["file-name"];
+  const imageid = req.query["image-id"];
+  const carid = req.params.id;
+  console.log(imageid);
+  console.log(carid);
+
+  var params = {
+    Bucket: S3_BUCKET,
+    Key: fileName
+  };
+  s3.deleteObject(params, function(err, data) {
+    if (err) {
+      console.log(err, err.stack);
+      //alert(err);
+    } else {
+      //alert("success");
+      console.log(data);
+    } // successful response
+  });
+});
+
+app.get("/sign-s3", (req, res) => {
+  const s3 = new aws.S3();
+  const fileName = req.query["file-name"];
+  const fileType = req.query["file-type"];
+  const s3Params = {
+    Bucket: S3_BUCKET,
+    Key: fileName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: "public-read"
+  };
+
+  s3.getSignedUrl("putObject", s3Params, (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+    };
+    res.write(JSON.stringify(returnData));
+    res.end();
+  });
+});
 
 const port = process.env.PORT || 4000;
 

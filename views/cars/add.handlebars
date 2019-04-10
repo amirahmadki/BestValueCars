@@ -1,7 +1,7 @@
 <div class="row">
   <h1 class="center">Car Details</h1>
   <div class="col s8 offset-s2">
-    <form action="/cars" method="post" enctype="multipart/form-data">
+    <form action="/cars" method="post">
       <div class="row">
         <div class="input-field ">
           <input type="text" name="price" required>
@@ -98,11 +98,15 @@
         <div class="file-field input-field">
           <div class="btn">
             <span>File</span>
-            <input type="file" name="images" multiple>
+            <input type="file" id="images" name="images" onclick="getSign()" multiple>
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text" placeholder="Upload one or more files">
           </div>
+          <div class="row" id="gamediv">
+            {{!-- <img id="preview" src="/images/default.png" width="100px"> --}}
+          </div>
+
         </div>
       </div>
 
