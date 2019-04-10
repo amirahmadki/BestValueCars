@@ -123,11 +123,12 @@ app.post("/s3-delete", (req, res) => {
 });
 
 app.get("/sign-s3", (req, res) => {
+  //console.log(S3_BUCKET);
   const s3 = new aws.S3();
   const fileName = req.query["file-name"];
   const fileType = req.query["file-type"];
   const s3Params = {
-    Bucket: S3_BUCKET,
+    Bucket: "bestvaluecars",
     Key: fileName,
     Expires: 60,
     ContentType: fileType,
