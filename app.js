@@ -21,7 +21,7 @@ require("./models/User");
 require("./config/passport")(passport);
 require("./config/passportlocal")(passport);
 
-const S3_BUCKET = process.env.S3_BUCKET || "bestvaluecars";
+const S3_BUCKET = keys.S3_BUCKET;
 
 //load routes
 const index = require("./routes/index");
